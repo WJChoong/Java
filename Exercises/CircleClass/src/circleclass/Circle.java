@@ -9,23 +9,23 @@ package circleclass;
  *
  * @author User
  */
-public class Circle {
+public class Circle  extends Shape{
     private double radius;
-    private String color;
     
     public Circle(){
+        super();
         radius = 1.0;
-        color = "red";
     }
     
     public Circle(double r){
+        super();
         radius =r;
-        color = "r";
     }
     
-     public Circle(double r, String c){
-        radius =r;
-        color = c;
+     public Circle(double r, String c, boolean f){
+         setColor(c);
+         isFilled(f);
+         radius =r;
     }
     
      //To retrieve a value
@@ -33,21 +33,17 @@ public class Circle {
         return radius;
     }
     
-    public String getColor(){
-        return color;
-    }
-    
     //To set the value
     public void setRadius(double radius){
         this.radius = radius;
     }
     
-    public void setColor(String r){
-        color = c;
-    }
-    
     public double getArea(){
         return Math.PI * radius * radius;
+    }
+    
+    public double setPerimeter(){
+        return 2* Math.PI * radius;
     }
     
     //To String Method
