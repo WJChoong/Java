@@ -15,7 +15,7 @@ public class Contact extends JFrame{
         setSize(400,150);// (width, height)
         setLocation(100,200);//(x-coordinate,y-coordinate)
         setTitle("Contact"); //the title of the window
-        setLayout(new BorderLayout(0,0);
+        setLayout(new BorderLayout(0,0));
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         intGUI();
@@ -63,5 +63,4 @@ public class Contact extends JFrame{
         pButtons.add(btnSeach);
         pButtons.add(btnExit);
     }
-}
 }
