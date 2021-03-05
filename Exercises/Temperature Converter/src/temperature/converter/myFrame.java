@@ -11,6 +11,7 @@ import java.awt.event.*;
 public class myFrame extends JFrame implements ActionListener{
     private Label lblfah, lblcent;
     private TextField txtfah, txtcent;
+    private double fahr, cent;
     
     public myFrame(){
         setSize(300,100);// (width, height)
@@ -40,9 +41,7 @@ public class myFrame extends JFrame implements ActionListener{
         
 
     }
-    public void actionPerformed (ActionEvent e)  {
-        double fahr, cent;
-        
+    public void actionPerformed (ActionEvent e)  {        
         if (e.getSource() == txtfah){
             fahr =  Double.parseDouble(txtfah.getText());
             cent = 9.0 * fahr / 5.0 + 32.0;

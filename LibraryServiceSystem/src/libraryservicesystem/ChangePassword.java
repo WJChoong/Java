@@ -9,13 +9,8 @@ package libraryservicesystem;
  *
  * @author User
  */
-public class LibraryServiceSystem{
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        LoginPage index = new LoginPage();   
-//        Renew index = new Renew(); 
+public class ChangePassword {
+    public ChangePassword(String user, String newPass){
+        
     }
-    
 }

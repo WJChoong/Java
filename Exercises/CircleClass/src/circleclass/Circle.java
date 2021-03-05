@@ -9,7 +9,7 @@ package circleclass;
  *
  * @author User
  */
-public class Circle  extends Shape{
+public class Circle extends Shape{
     private double radius;
     
     public Circle(){
