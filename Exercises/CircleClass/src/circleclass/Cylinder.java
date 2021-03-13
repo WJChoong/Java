@@ -31,7 +31,7 @@ public class Cylinder  extends Circle{
         return height;
     }   
     
-   public void setHeight(double h){
+   public void setHeight(String h){
        height = h;
    }
    

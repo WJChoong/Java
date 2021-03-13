@@ -7,14 +7,18 @@ package libraryservicesystem;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author User
  */
 public class ForgetPass extends JFrame implements ActionListener{
-    private Label lblTitle, lblUser, lblPass, lblPass2;
+    private Label lblTitle, lblUser, lblPass, lblPass2, lblError;
     private TextField txtUser, txtPass, txtPass2;
     private Button btnLogin, btnChange;
+    private String username, newPass, ConPass;
     
     public ForgetPass(){    
         setSize(500,300);
@@ -52,7 +56,7 @@ public class ForgetPass extends JFrame implements ActionListener{
         add(pPass2);
         add(pButton);
         
-        lblTitle = new Label("Login");
+        lblTitle = new Label("Change Password");
         lblTitle.setFont(new Font("Verdana", Font.BOLD, 30));
         pTitle.add(lblTitle); 
         
@@ -69,7 +73,7 @@ public class ForgetPass extends JFrame implements ActionListener{
         lblPass2 = new Label("Confirm Password: ");
         txtPass2 = new TextField("", 20);
         pPass2.add(lblPass2); 
-        pPass2.add(txtPass2);
+        pPass2.add(txtPass2); 
         
         btnLogin = new Button("Login");
         btnLogin.setFont(new Font("Verdana", Font.PLAIN, 15));
@@ -83,9 +87,19 @@ public class ForgetPass extends JFrame implements ActionListener{
             LoginPage index = new LoginPage();
         }
         else if (e.getSource() == btnChange){
-            
+            username = txtUser.getText();
+            newPass = txtPass.getText().toString();
+            ConPass = txtPass2.getText().toString();
+            if (newPass.equals(ConPass)){
+                try {
+                    new ChangePassword(username, newPass);
+                } catch (IOException ex) {
+                    Logger.getLogger(ForgetPass.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            else {
+                System.out.println("Password Incorrect");
+            }
         }  
-    }
-    
-    
+    }     
 }

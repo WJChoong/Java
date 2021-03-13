@@ -27,16 +27,11 @@ public class LoginAction {
             String ID = details[0];
             String pass = details[2].toString();
             
-            if ((user.equalsIgnoreCase(ID))&&(password.equals(pass))){
-               System.out.println("Hey");
+            if ((user.equals(ID))&&(password.equals(pass))){
                status = "success";
             }
             else {
-               System.out.println("FAILED");
-               System.out.println(ID);
-               System.out.println(user);
-               System.out.println(password);
-               System.out.println(pass);
+               
             }
         }
         
@@ -44,7 +39,7 @@ public class LoginAction {
             ActionPage index = new ActionPage();
         }
         else if (status == "fail"){
-            System.out.println("Sorry");
+            
         }
     }
 }
