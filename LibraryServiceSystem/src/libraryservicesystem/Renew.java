@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class Renew extends JFrame implements ActionListener {   
     private JMenuBar mb;  
     private JMenu mAction;
-    private JMenuItem btnreturns,btnloan, btnlogout; 
+    private JMenuItem btnreturns,btnloan, btncheck, btnlogout; 
     private Label lblTitle,lblStuID,lblBookID;
     private TextField txtStuID, txtBookID;
     private Button btnProceed, btnClear;
@@ -40,11 +40,11 @@ public class Renew extends JFrame implements ActionListener {
         
         btnreturns.addActionListener(this);
         btnloan.addActionListener(this);
+        btncheck.addActionListener(this);
         btnlogout.addActionListener(this);
         btnProceed.addActionListener(this);
         btnClear.addActionListener(this);
-        btnProceed.addActionListener(this);
-        btnClear.addActionListener(this);
+        btnlogout.addActionListener(this);
     }
     
     private void intGUI(){               
@@ -52,10 +52,13 @@ public class Renew extends JFrame implements ActionListener {
         mAction = new JMenu("Action");
         btnloan =new JMenuItem("Loan");  
         btnreturns=new JMenuItem("Return"); 
+        btncheck=new JMenuItem("Check");
         btnlogout=new JMenuItem("LogOut");  
         mb.add(mAction);
         mAction.add(btnloan);
         mAction.add(btnreturns);
+        mAction.add(btncheck);
+        mAction.add(btncheck);
         mAction.add(btnlogout);
         add(mb);  
         setJMenuBar(mb);
@@ -101,6 +104,7 @@ public class Renew extends JFrame implements ActionListener {
         if (e.getSource() == btnreturns){
             try {
                 Return returnbook = new Return();
+                this.dispose();
             } catch (IOException ex) {
                 Logger.getLogger(Renew.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -108,16 +112,19 @@ public class Renew extends JFrame implements ActionListener {
         else if (e.getSource() == btnloan){
             try {
                 Loan borrows = new Loan();
+                this.dispose();
             } catch (IOException ex) {
                 Logger.getLogger(Renew.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if (e.getSource() == btnlogout){
             LoginPage login = new LoginPage();
+            this.dispose();
         }
         else if (e.getSource() == btnProceed){
-           userID = txtStuID.getText();
-           bookID = txtBookID.getText();
+            userID = txtStuID.getText();
+            bookID = txtBookID.getText();
+            System.out.println("1");
             try {
                 RenewBook(userID, bookID);
             } catch (IOException ex) {
@@ -128,16 +135,19 @@ public class Renew extends JFrame implements ActionListener {
             txtStuID.setText("");
             txtBookID.setText("");
         }
+        else if (e.getSource() == btncheck){
+            LateTable index = new LateTable();
+            this.dispose();
+        }
     }
     public void RenewBook(String uID, String bID) throws IOException{
         //get current date
         LocalDate currentDate = LocalDate.now();
-        
+        String status = "fail";
         //Locate the database
         String filename = "Loan.txt";
         File file = new File(filename);
         Scanner inputFile = new Scanner(file);
-        
         // Read lines from the file until no more are left.
         while (inputFile.hasNext())
         {
@@ -151,23 +161,28 @@ public class Renew extends JFrame implements ActionListener {
             UserID = details[1];
             BookID = details[2];
             loanStatus = details[5];
-            
             //get the correct record
             if ((uID.equals(UserID) )&& (bID.equals(BookID)) && (loanStatus.equals("Loaned"))){
                 num = details[0];
                 returnDate = LocalDate.parse(details[4]);
+                status = "pass";
             }
         }
-        inputFile.close(); // Close the file   
-        newdate = currentDate.plus(2, ChronoUnit.WEEKS);
-        long noOfDaysBetween = ChronoUnit.DAYS.between(currentDate, returnDate);
-        
-        //check whether exceed the date pr not
-        if (noOfDaysBetween < 0){
-            println("Sohai");
-        }else if(noOfDaysBetween > 0){
-            new ChangeData(uID, bID, newdate);
+        if (status == "pass"){
+            inputFile.close(); // Close the file   
+            newdate = currentDate.plus(2, ChronoUnit.WEEKS);
+            long noOfDaysBetween = ChronoUnit.DAYS.between(currentDate, returnDate); 
+
+            //check whether exceed the date pr not
+            if (noOfDaysBetween < 0){
+                JOptionPane.showMessageDialog(null, "You already exceed the returned date. Please return the book");
+            }else if(noOfDaysBetween > 0){
+                new ChangeData(uID, bID, newdate);
+            }
         }
-        
+        else{
+            System.out.println("Me too");
+            JOptionPane.showMessageDialog(null, "The record is not found");
+        }
     }
 }

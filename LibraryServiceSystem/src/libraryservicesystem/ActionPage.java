@@ -7,13 +7,16 @@ package libraryservicesystem;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author User
  */
 public class ActionPage extends JFrame implements ActionListener{
     private Label lblTitle;
-    private Button btnLoan,btnRenew, btnReturn;
+    private Button btnLoan,btnRenew, btnReturn, btnCheck;
     
     public ActionPage(){    
         setSize(500,300);
@@ -39,15 +42,18 @@ public class ActionPage extends JFrame implements ActionListener{
         Panel pLoan = new Panel();
         Panel pRenew = new Panel();
         Panel pReturn = new Panel();
+        Panel pCheck = new Panel();
         
         pTitle.setPreferredSize(new Dimension(500, 50));
         pLoan.setPreferredSize(new Dimension(500, 50));
         pRenew.setPreferredSize(new Dimension(500, 50));
         pReturn.setPreferredSize(new Dimension(500, 50));
+        pCheck.setPreferredSize(new Dimension(500, 50));
         add(pTitle);
         add(pLoan);
         add(pRenew);
         add(pReturn);
+        add(pCheck);
         
         lblTitle = new Label("How Can I Help You ?");
         lblTitle.setFont(new Font("Verdana", Font.BOLD, 30));
@@ -64,16 +70,35 @@ public class ActionPage extends JFrame implements ActionListener{
         btnReturn = new Button("Return Book");
         btnReturn.setFont(new Font("Verdana", Font.PLAIN, 15));
         pReturn.add(btnReturn); 
+        
+        btnCheck = new Button("Check Loaned List");
+        btnCheck.setFont(new Font("Verdana", Font.PLAIN, 15));
+        pCheck.add(btnCheck);
     }
     public void actionPerformed (ActionEvent e)  {        
         if (e.getSource() == btnLoan){
-            Loan loan = new Loan();
+            try {
+                Loan loan = new Loan();
+                this.dispose();
+            } catch (IOException ex) {
+                Logger.getLogger(ActionPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         else if (e.getSource() == btnRenew){
             Renew renew = new Renew();
+            this.dispose();
         }  
         else if (e.getSource() == btnReturn){
-            Return returns = new Return();
+            try {
+                Return returns = new Return();
+                this.dispose();
+            } catch (IOException ex) {
+                Logger.getLogger(ActionPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
+        else if (e.getSource() == btnCheck){
+            LateTable renew = new LateTable();
+            this.dispose();
         } 
     }
     

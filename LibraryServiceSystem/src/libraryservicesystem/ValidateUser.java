@@ -8,6 +8,7 @@ import java.io.*;
 import java.util.Scanner; 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author User
@@ -15,7 +16,7 @@ import java.util.logging.Logger;
 public class ValidateUser {
     private String user,msg, status, data, ID, filename;
     
-    public ValidateUser(String userID) throws IOException{
+    public String ValidateUser(String userID) throws IOException{
         msg = "";
         status = "fail";
         user = userID.substring(0,2);
@@ -63,14 +64,12 @@ public class ValidateUser {
                 }
             }
             if (status.equals("fail")){
-               msg = "Invalid";
+               JOptionPane.showMessageDialog(null, "User not found");
             }
         }
         else{ 
            msg="Invalid ID";
         }  
-    }
-    public String getMsg(){
-        return msg;
+        return status;
     }
 }

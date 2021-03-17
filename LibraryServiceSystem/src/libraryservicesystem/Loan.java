@@ -21,7 +21,7 @@ import java.util.Scanner;
 public class Loan extends JFrame implements ActionListener {   
     private JMenuBar mb;    
     private JMenu mAction;
-    private JMenuItem btnreturns, btnrenew, btnlogout; 
+    private JMenuItem btnreturns, btnrenew,btncheck, btnlogout; 
     private Label lblTitle,lblStuID,lblBookID,lblMsg;
     private TextField txtStuID, txtBookID;
     private Button btnProceed, btnClear;
@@ -40,6 +40,7 @@ public class Loan extends JFrame implements ActionListener {
         btnreturns.addActionListener(this);
         btnrenew.addActionListener(this);
         btnlogout.addActionListener(this);
+        btncheck.addActionListener(this);
         btnProceed.addActionListener(this);
         btnClear.addActionListener(this);
     }
@@ -48,11 +49,13 @@ public class Loan extends JFrame implements ActionListener {
         mb=new JMenuBar();  
         mAction = new JMenu("Action"); 
         btnrenew=new JMenuItem("Renew");
-        btnreturns=new JMenuItem("Return"); 
+        btnreturns=new JMenuItem("Return");
+        btncheck=new JMenuItem("Check");
         btnlogout=new JMenuItem("LogOut");  
         mb.add(mAction);
         mAction.add(btnrenew); 
         mAction.add(btnreturns);
+        mAction.add(btncheck);
         mAction.add(btnlogout);
         add(mb);  
         setJMenuBar(mb);
@@ -105,17 +108,27 @@ public class Loan extends JFrame implements ActionListener {
     @Override
     public void actionPerformed (ActionEvent e) {        
         if (e.getSource() == btnreturns){
-            Return returnbook = new Return();
+            try {
+                Return returnbook = new Return();
+                this.dispose();
+            } catch (IOException ex) {
+                Logger.getLogger(Loan.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } 
         else if (e.getSource() == btnrenew){
             Renew borrows = new Renew();
+            this.dispose();
         }  
         else if (e.getSource() == btnlogout){
             LoginPage login = new LoginPage();
+            this.dispose();
+            
         }
-        else if (e.getSource() == btnProceed) {
+        else if (e.getSource() == btnProceed){
             userID = txtStuID.getText();
             bookID = txtBookID.getText(); 
+//            ValidateUser(userID);
+//            System.out.println(valid);
             try {
                 LoanAction(userID, bookID);
             } catch (IOException ex) {
@@ -128,6 +141,11 @@ public class Loan extends JFrame implements ActionListener {
         else if (e.getSource() == btnClear){
             txtStuID.setText("");
             txtBookID.setText("");
+            lblMsg.setText("");
+        }
+        else if (e.getSource() == btncheck){
+            LateTable index = new LateTable();
+            this.dispose();
         }
     } 
     public void LoanAction(String uID, String bID) throws IOException{

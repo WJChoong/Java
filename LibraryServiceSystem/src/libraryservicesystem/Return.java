@@ -20,7 +20,7 @@ import java.util.Scanner;
 public class Return extends JFrame implements ActionListener {   
     private JMenuBar mb;    
     private JMenu mAction;
-    private JMenuItem btnrenew,btnloan,btnlogout; 
+    private JMenuItem btnrenew,btnloan,btnlogout, btncheck; 
     private Label lblTitle,lblStuID,lblBookID,lblMsg,lblFine;
     private TextField txtStuID, txtBookID;
     private Button btnProceed, btnClear,btnPaid,btnCancel;
@@ -40,6 +40,7 @@ public class Return extends JFrame implements ActionListener {
         btnrenew.addActionListener(this);
         btnloan.addActionListener(this);
         btnlogout.addActionListener(this);
+        btncheck.addActionListener(this);
         btnProceed.addActionListener(this);
         btnClear.addActionListener(this);
     }
@@ -50,10 +51,12 @@ public class Return extends JFrame implements ActionListener {
         mAction = new JMenu("Action");
         btnloan =new JMenuItem("Loan");  
         btnrenew=new JMenuItem("Renew");
+        btncheck=new JMenuItem("Check");
         btnlogout=new JMenuItem("LogOut");  
         mb.add(mAction);
         mAction.add(btnloan);
-        mAction.add(btnrenew); 
+        mAction.add(btnrenew);
+        mAction.add(btncheck);
         mAction.add(btnlogout);
         add(mb);  
         setJMenuBar(mb);
@@ -113,9 +116,11 @@ public class Return extends JFrame implements ActionListener {
     public void actionPerformed (ActionEvent e)  {    
         if (e.getSource() == btnrenew){
             Renew renew = new Renew();
+            this.dispose();
         }  
         else if (e.getSource() == btnloan){
             LoginPage login = new LoginPage();
+            this.dispose();
         }
         else if (e.getSource() == btnProceed){
             //get input data
@@ -133,9 +138,18 @@ public class Return extends JFrame implements ActionListener {
             //clear all input data
             txtStuID.setText("");
             txtBookID.setText("");
+            lblMsg.setText("");
         }
         else if(e.getSource() == btnPaid) {
-            ReturnAction();
+            try {
+                ReturnAction();
+            } catch (IOException ex) {
+                Logger.getLogger(Return.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else if (e.getSource() == btncheck){
+            LateTable index = new LateTable();
+            this.dispose();
         }
     }
     //process of returning the book

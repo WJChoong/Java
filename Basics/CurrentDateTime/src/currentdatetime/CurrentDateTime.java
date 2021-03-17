@@ -6,7 +6,7 @@
 package currentdatetime;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-
+import java.util.Arrays;
 import java.time.format.DateTimeFormatter;  
 import java.time.LocalDateTime;    
 /**
@@ -42,6 +42,11 @@ public class CurrentDateTime {
 	System.out.println(noOfDaysBetween);
         int fine = (int) (noOfDaysBetween * 1) ;
         System.out.println("RM" + fine);
+        String[] hey;
+        hey = new String[6];
+        hey[0] = "over";
+        hey[1] = "bye bye";
+        System.out.println(Arrays.toString(hey);
     }
     
 }

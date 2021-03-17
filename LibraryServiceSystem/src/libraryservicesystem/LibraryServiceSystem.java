@@ -16,9 +16,12 @@ public class LibraryServiceSystem{
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException {
-//        LoginPage index = new LoginPage();   
-        Loan index = new Loan(); 
-//        Return index = new Return();
+//        LoginPage index = new LoginPage(); 
+//Register index = new Register();
+//        Loan index = new Loan(); 
+        Return index = new Return();
 //        Renew index = new Renew();
+//        LateTable index = new LateTable();
+//ActionPage index = new ActionPage();
     }
 }

@@ -8,6 +8,7 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.*; 
+import java.util.Scanner; 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -17,12 +18,12 @@ import java.util.logging.Logger;
 public class LoginPage extends JFrame implements ActionListener{
     private Label lblTitle, lblUser, lblPass;
     private TextField txtUser, txtPass;
-    private Button btnLogin, btnForget;
+    private Button btnLogin, btnForget, btnRegister;
     private String username, password;
     
     public LoginPage(){    
         setSize(500,300);
-        setLocation(500,200);//(x,y)
+        setLocation(500,200);
         setTitle("Library Service System");
         setLayout(new FlowLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -32,6 +33,7 @@ public class LoginPage extends JFrame implements ActionListener{
         intGUI();
         btnLogin.addActionListener(this);
         btnForget.addActionListener(this);
+        btnRegister.addActionListener(this);
         
         //set whether the frane is visible
         setVisible(true);
@@ -67,6 +69,9 @@ public class LoginPage extends JFrame implements ActionListener{
         pPass.add(lblPass); 
         pPass.add(txtPass);
         
+        btnRegister = new Button("Register");
+        btnRegister.setFont(new Font("Verdana", Font.PLAIN, 15));
+        pButton.add(btnRegister);
         btnLogin = new Button("Login");
         btnLogin.setFont(new Font("Verdana", Font.PLAIN, 15));
         pButton.add(btnLogin); 
@@ -75,19 +80,58 @@ public class LoginPage extends JFrame implements ActionListener{
         pButton.add(btnForget); 
     }
     @Override
-    public void actionPerformed (ActionEvent e) {        
+    public void actionPerformed (ActionEvent e){        
         if (e.getSource() == btnLogin){
             username = txtUser.getText();
             password = txtPass.getText().toString();
             try {
-                new LoginAction(username,password);
+                LoginAction(username, password);
             } catch (IOException ex) {
                 Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
             }
+            txtUser.setText("");
+            txtPass.setText("");
         }
         else if (e.getSource() == btnForget){
             ForgetPass index = new ForgetPass();
+            this.dispose();
         }  
+        else if (e.getSource() == btnRegister){
+            Register index = new Register();
+            this.dispose();       
+        }  
+    }
+
+    public void LoginAction(String user,String pass) throws IOException{
+        String filename = "Staff.txt";
+        File file = new File(filename);
+        Scanner inputFile = new Scanner(file);
+        String status = "fail";
+        
+        while (inputFile.hasNext()){
+         // Read the next line.
+            String friendName = inputFile.nextLine();
+
+            // Split the line by using the delimiter ":" (semicolon) and store into array.
+            String[] details = friendName.split(":");
+            String ID = details[0];
+            String passW = details[2].toString();
+            
+            if ((user.equals(ID))&&(pass.equals(passW))){
+               status = "success";
+            }
+            else {
+               
+            }
+        }
+        
+        if (status == "success"){
+            ActionPage index = new ActionPage();
+            this.dispose();
+        }
+        else if (status == "fail"){
+            JOptionPane.showMessageDialog(null, "User not found");
+        }
     }
     
 }

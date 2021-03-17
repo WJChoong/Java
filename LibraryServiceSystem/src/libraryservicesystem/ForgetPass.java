@@ -27,8 +27,6 @@ public class ForgetPass extends JFrame implements ActionListener{
         setLayout(new FlowLayout());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        setVisible(true);
-        
         intGUI();
         btnLogin.addActionListener(this);
         btnChange.addActionListener(this);
@@ -85,6 +83,7 @@ public class ForgetPass extends JFrame implements ActionListener{
     public void actionPerformed (ActionEvent e)  {        
         if (e.getSource() == btnLogin){
             LoginPage index = new LoginPage();
+            this.dispose();
         }
         else if (e.getSource() == btnChange){
             username = txtUser.getText();

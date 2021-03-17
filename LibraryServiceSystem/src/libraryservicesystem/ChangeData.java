@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 import java.time.LocalDate;
+import javax.swing.JOptionPane;
 /**
  *
  * @author User
@@ -33,7 +34,7 @@ public class ChangeData {
            data5 = details[4];
            data6 = details[5];
 
-           if ((userID.equals(data2)) && (bookID.equals(data3)) && (data6.equals("Loaned"))){
+            if ((userID.equals(data2)) && (bookID.equals(data3)) && (data6.equals("Loaned"))){
                // TODO code application logic here
                 String filePath = "D:/Code/Java/LibraryServiceSystem/Loan.txt";
                 //Instantiating the Scanner class to read the file
@@ -45,7 +46,6 @@ public class ChangeData {
                    buffer.append(sc.nextLine()+System.lineSeparator());
                 }
                 String fileContents = buffer.toString();
-                System.out.println("Contents of the file: "+fileContents);
                 //closing the Scanner object
                 sc.close();
                 String oldLine = data1 + ":" + data2 + ":" + data3 + ":" + data4 + ":" + data5 + ":" + data6;
@@ -54,11 +54,9 @@ public class ChangeData {
                 fileContents = fileContents.replaceAll(oldLine, newLine);
                 //instantiating the FileWriter class
                 FileWriter writer = new FileWriter(filePath);
-                System.out.println("");
-                System.out.println("new data: "+fileContents);
                 writer.append(fileContents);
                 writer.flush();  
-//               lblMsg.setText("The book is returned");
+                JOptionPane.showMessageDialog(null, "The book had successfully returned");
             }
         }
     }
@@ -77,10 +75,10 @@ public class ChangeData {
            data3 = details[2];
            data4 = details[3];
            data5 = details[4];
-           data6 = details[5];
-
-           if ((userID.equals(data2)) && (bookID.equals(data3)) && (data6.equals("Loaned"))){
-               // TODO code application logic here
+           data6 = details[5];           
+           
+            if ((userID.equals(data2)) && (bookID.equals(data3)) && (data6.equals("Loaned"))){
+                // TODO code application logic here
                 String filePath = "D:/Code/Java/LibraryServiceSystem/Loan.txt";
                 //Instantiating the Scanner class to read the file
                 Scanner sc = new Scanner(new File(filePath));
@@ -91,7 +89,6 @@ public class ChangeData {
                    buffer.append(sc.nextLine()+System.lineSeparator());
                 }
                 String fileContents = buffer.toString();
-                System.out.println("Contents of the file: "+fileContents);
                 //closing the Scanner object
                 sc.close();
                 String oldLine = data1 + ":" + data2 + ":" + data3 + ":" + data4 + ":" + data5 + ":" + data6;
@@ -100,11 +97,8 @@ public class ChangeData {
                 fileContents = fileContents.replaceAll(oldLine, newLine);
                 //instantiating the FileWriter class
                 FileWriter writer = new FileWriter(filePath);
-                System.out.println("");
-                System.out.println("new data: "+fileContents);
                 writer.append(fileContents);
                 writer.flush();  
-//               lblMsg.setText("The book is returned");
             }
         }
     }
