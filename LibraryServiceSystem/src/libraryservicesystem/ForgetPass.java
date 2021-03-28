@@ -89,15 +89,20 @@ public class ForgetPass extends JFrame implements ActionListener{
             username = txtUser.getText();
             newPass = txtPass.getText().toString();
             ConPass = txtPass2.getText().toString();
-            if (newPass.equals(ConPass)){
-                try {
-                    new ChangePassword(username, newPass);
-                } catch (IOException ex) {
-                    Logger.getLogger(ForgetPass.class.getName()).log(Level.SEVERE, null, ex);
-                }
+            if (username.equals("") || newPass.equals("") || ConPass.equals("")){
+                JOptionPane.showMessageDialog(null, "Please don't leave it blank");
             }
-            else {
-                System.out.println("Password Incorrect");
+            else{
+                if (newPass.equals(ConPass)){
+                    try {
+                        new ChangePassword(username, newPass);
+                    } catch (IOException ex) {
+                        Logger.getLogger(ForgetPass.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else {
+                    JOptionPane.showMessageDialog(null, "Password are not same");
+                }
             }
         }  
     }     

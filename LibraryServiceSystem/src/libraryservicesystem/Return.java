@@ -119,6 +119,14 @@ public class Return extends JFrame implements ActionListener {
             this.dispose();
         }  
         else if (e.getSource() == btnloan){
+            try {
+                Loan login = new Loan();
+            } catch (IOException ex) {
+                Logger.getLogger(Return.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.dispose();
+        }
+        else if (e.getSource() == btnlogout){
             LoginPage login = new LoginPage();
             this.dispose();
         }
@@ -128,10 +136,15 @@ public class Return extends JFrame implements ActionListener {
             bookID = txtBookID.getText();
             
             //call the ReturnBook class to proces the data
-            try {
-                ReturnBook(userID, bookID);
-            } catch (IOException ex) {
-                Logger.getLogger(Return.class.getName()).log(Level.SEVERE, null, ex);
+            if (userID.equals("") || bookID.equals("")){
+                JOptionPane.showMessageDialog(null, "Please don't leave it blank");
+            }
+            else{
+                try {
+                    ReturnBook(userID, bookID);
+                } catch (IOException ex) {
+                    Logger.getLogger(Return.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         else if (e.getSource() == btnClear){

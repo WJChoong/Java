@@ -6,6 +6,7 @@
 package libraryservicesystem;
 import java.io.*;
 import java.util.Scanner; 
+import javax.swing.JOptionPane;
 /**
  *
  * @author User
@@ -52,10 +53,14 @@ public class ChangePassword {
                 FileWriter writer = new FileWriter(filePath);
                 writer.append(fileContents);
                 writer.flush();  
-//               lblMsg.setText("The book is returned");
-                
+                status = "pass";
             }
         }
-        
+        if (status.equals("fail")){
+            JOptionPane.showMessageDialog(null, "Invelid User");
+        }
+        else if (status.equals("pass")){
+            JOptionPane.showMessageDialog(null, "Password successfully changed");
+        }
     }
 }

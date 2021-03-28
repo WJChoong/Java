@@ -127,12 +127,15 @@ public class Loan extends JFrame implements ActionListener {
         else if (e.getSource() == btnProceed){
             userID = txtStuID.getText();
             bookID = txtBookID.getText(); 
-//            ValidateUser(userID);
-//            System.out.println(valid);
-            try {
+            if (userID.equals("") || bookID.equals("")){
+                JOptionPane.showMessageDialog(null, "Please don't leave it blank");
+            }
+            else{
+                try {
                 LoanAction(userID, bookID);
             } catch (IOException ex) {
                 Logger.getLogger(Loan.class.getName()).log(Level.SEVERE, null, ex);
+            }
             }
             lblMsg.setText(msg);
             txtStuID.setText("");

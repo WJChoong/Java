@@ -128,19 +128,23 @@ public class LateTable extends JFrame implements ActionListener{
         }  
         else if (e.getSource() == btnrenew){
             Renew borrows = new Renew();
+            this.dispose();
         } 
         else if (e.getSource() == btnloan){
             try {
                 Loan borrows = new Loan();
+                this.dispose();
             } catch (IOException ex) {
                 Logger.getLogger(Renew.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else if (e.getSource() == btnlogout){
             LoginPage login = new LoginPage();
+            this.dispose();
         }
         else if (e.getSource() == btnDone){
             ActionPage index = new ActionPage();
+            this.dispose();
         }
     }
 }

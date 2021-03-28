@@ -44,7 +44,6 @@ public class Renew extends JFrame implements ActionListener {
         btnlogout.addActionListener(this);
         btnProceed.addActionListener(this);
         btnClear.addActionListener(this);
-        btnlogout.addActionListener(this);
     }
     
     private void intGUI(){               
@@ -57,7 +56,6 @@ public class Renew extends JFrame implements ActionListener {
         mb.add(mAction);
         mAction.add(btnloan);
         mAction.add(btnreturns);
-        mAction.add(btncheck);
         mAction.add(btncheck);
         mAction.add(btnlogout);
         add(mb);  
@@ -124,11 +122,14 @@ public class Renew extends JFrame implements ActionListener {
         else if (e.getSource() == btnProceed){
             userID = txtStuID.getText();
             bookID = txtBookID.getText();
-            System.out.println("1");
-            try {
-                RenewBook(userID, bookID);
-            } catch (IOException ex) {
-                Logger.getLogger(Renew.class.getName()).log(Level.SEVERE, null, ex);
+            if (userID.equals("") || bookID.equals("")){
+                    JOptionPane.showMessageDialog(null, "Please don't leave it blank");
+            }else{
+                try {
+                    RenewBook(userID, bookID);
+                } catch (IOException ex) {
+                    Logger.getLogger(Renew.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
         else if (e.getSource() == btnClear){
@@ -168,7 +169,7 @@ public class Renew extends JFrame implements ActionListener {
                 status = "pass";
             }
         }
-        if (status == "pass"){
+        if (status.equals("pass")){
             inputFile.close(); // Close the file   
             newdate = currentDate.plus(2, ChronoUnit.WEEKS);
             long noOfDaysBetween = ChronoUnit.DAYS.between(currentDate, returnDate); 
@@ -181,7 +182,6 @@ public class Renew extends JFrame implements ActionListener {
             }
         }
         else{
-            System.out.println("Me too");
             JOptionPane.showMessageDialog(null, "The record is not found");
         }
     }
