@@ -84,6 +84,7 @@ public class LoginPage extends JFrame implements ActionListener{
         if (e.getSource() == btnLogin){
             username = txtUser.getText();
             password = txtPass.getText().toString();
+            
             try {
                 LoginAction(username, password);
             } catch (IOException ex) {
@@ -97,7 +98,11 @@ public class LoginPage extends JFrame implements ActionListener{
             this.dispose();
         }  
         else if (e.getSource() == btnRegister){
-            Register index = new Register();
+            try {
+                Register index = new Register();
+            } catch (IOException ex) {
+                Logger.getLogger(LoginPage.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.dispose();       
         }  
     }
