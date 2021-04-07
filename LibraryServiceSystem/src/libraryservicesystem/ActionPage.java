@@ -31,6 +31,7 @@ public class ActionPage extends JFrame implements ActionListener{
         btnLoan.addActionListener(this);
         btnRenew.addActionListener(this);
         btnReturn.addActionListener(this);
+        btnCheck.addActionListener(this);
         
         //set whether the frane is visible
         setVisible(true);

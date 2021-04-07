@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.io.*;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author User
@@ -92,49 +94,53 @@ public class Register extends JFrame implements ActionListener{
             }
             else{
                 if (newPass.equals(ConPass)){
-                    String filename = "Staff.txt";
-                    File file = new File(filename);
-                    Scanner inputFile = new Scanner(file);
-
-                    // Read lines from the file until no more are left.
-                    num = 0;
-                    while (inputFile.hasNext())
-                    {
-                       // Read the next line.
-                       String data = inputFile.nextLine();
-
-                       // Split the line by using the delimiter ":" (semicolon) and store into array.
-                       String[] details = data.split(":");
-                       String temp = RemoveCharacter(details[0]);
-                       int ID = Integer.parseInt(temp);
-                       if (ID > num){
-                           num = ID;
-                       }
-                    }
-                    inputFile.close(); // Close the file
-
-                    FileWriter fw = new FileWriter(filename, true);
-                    PrintWriter outputFile = new PrintWriter(fw);
-
-                    num ++;
-                    num_ID = String.valueOf(num);
-                    ID = "0";
-
-                    if (num_ID.length() < 6){
-                        for (i = 0; i < (5-num_ID.length()); i++){
-                            halfID = "0";
-                            ID = ID + halfID;
+                    FileWriter fw = null;
+                    try {
+                        String filename = "Staff.txt";
+                        File file = new File(filename);
+                        Scanner inputFile = new Scanner(file);
+                        // Read lines from the file until no more are left.
+                        num = 0;
+                        while (inputFile.hasNext())
+                        {
+                            // Read the next line.
+                            String data = inputFile.nextLine();
+                            
+                            // Split the line by using the delimiter ":" (semicolon) and store into array.
+                            String[] details = data.split(":");
+                            String temp = RemoveCharacter(details[0]);
+                            int ID = Integer.parseInt(temp);
+                            if (ID > num){
+                                num = ID;
+                            }
+                        }   inputFile.close(); // Close the file
+                        fw = new FileWriter(filename, true);
+                        PrintWriter outputFile = new PrintWriter(fw);
+                        num ++;
+                        num_ID = String.valueOf(num);
+                        ID = "0";
+                        if (num_ID.length() < 6){
+                            for (i = 0; i < (5-num_ID.length()); i++){
+                                halfID = "0";
+                                ID = ID + halfID;
+                            }
+                            ID = "LS"+ ID + num;
                         }
-                        ID = "LS"+ ID + num;
+                        else{
+                            ID = "LS" + num;
+                        }   String data = ID + ":" + username + ":" + newPass ;
+                        outputFile.println(data);
+                        outputFile.close();
+                        JOptionPane.showMessageDialog(null, "Successfully Created");
+                    } catch (IOException ex) {
+                        Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                        try {
+                            fw.close();
+                        } catch (IOException ex) {
+                            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-                    else{
-                        ID = "LS" + num;
-                    }
-
-                    String data = ID + ":" + username + ":" + newPass ;
-                    outputFile.println(data);
-                    outputFile.close();
-                    JOptionPane.showMessageDialog(null, "Successfully Created");
                     }
                 else {
                     JOptionPane.showMessageDialog(null, "Password are not same");
